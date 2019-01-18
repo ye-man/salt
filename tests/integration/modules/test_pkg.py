@@ -14,13 +14,23 @@ from tests.support.helpers import (
     requires_salt_modules,
 )
 from tests.support.unit import skipIf
+from tests.support.runtests import RUNTIME_VARS
 
 # Import Salt libs
 import salt.utils.pkg
 import salt.utils.platform
 
+# Import 3rd-party libs
+import pytest
 
-@flaky
+
+if RUNTIME_VARS.PYTEST_SESSION is True:
+    class_decorator = pytest.mark.timeout(timeout=3*60)
+else:
+    class_decorator = flaky
+
+
+@class_decorator
 class PkgModuleTest(ModuleCase, SaltReturnAssertsMixin):
     '''
     Validate the pkg module
@@ -264,6 +274,7 @@ class PkgModuleTest(ModuleCase, SaltReturnAssertsMixin):
     @requires_network()
     @destructiveTest
     @skipIf(salt.utils.platform.is_windows(), 'pkg.upgrade not available on Windows')
+    @pytest.mark.timeout(timeout=60*4)
     def test_pkg_upgrade_has_pending_upgrades(self):
         '''
         Test running a system upgrade when there are packages that need upgrading
