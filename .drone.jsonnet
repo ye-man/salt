@@ -7,7 +7,7 @@ local Build(target, py_version, target_branch = 'develop', tests_dir='tests/', e
       name: 'test ' + target + ' ' + tests_dir + ' py' + py_version,
       image: 'saltstack/au-' + target + ':ci-' + target_branch + '-py' + py_version,
       commands: [
-        'tox -e py' + py_version + '-pytest -- ' + tests_dir
+        'tox -e py' + py_version + '-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats ' + tests_dir
       ]
     }
   ]
@@ -35,7 +35,6 @@ local test_dirs = [
   'tests/integration/daemons',
   'tests/integration/doc',
   'tests/integration/externalapi',
-  'tests/integration/fileserver',
   'tests/integration/grains',
   'tests/integration/loader',
   'tests/integration/logging',

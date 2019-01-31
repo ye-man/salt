@@ -5,7 +5,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/unit"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/unit"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/unit py2"
@@ -19,7 +19,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/cli"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/cli"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/cli py2"
@@ -33,7 +33,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/client"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/client"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/client py2"
@@ -47,7 +47,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/cloud"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/cloud"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/cloud py2"
@@ -61,7 +61,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/daemons"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/daemons"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/daemons py2"
@@ -75,7 +75,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/doc"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/doc"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/doc py2"
@@ -89,24 +89,10 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/externalapi"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/externalapi"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/externalapi py2"
-      }
-   ]
-}
----
-{
-   "kind": "pipeline",
-   "name": "centos-7 tests/integration/fileserver py2",
-   "steps": [
-      {
-         "commands": [
-            "tox -e py2-pytest -- tests/integration/fileserver"
-         ],
-         "image": "saltstack/au-centos-7:ci-develop-py2",
-         "name": "test centos-7 tests/integration/fileserver py2"
       }
    ]
 }
@@ -117,7 +103,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/grains"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/grains"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/grains py2"
@@ -131,7 +117,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/loader"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/loader"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/loader py2"
@@ -145,7 +131,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/logging"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/logging"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/logging py2"
@@ -159,7 +145,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/minion"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/minion"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/minion py2"
@@ -173,7 +159,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/modules"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/modules"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/modules py2"
@@ -187,7 +173,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/netapi"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/netapi"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/netapi py2"
@@ -201,7 +187,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/output"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/output"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/output py2"
@@ -215,7 +201,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/pillar"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/pillar"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/pillar py2"
@@ -229,7 +215,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/proxy"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/proxy"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/proxy py2"
@@ -243,7 +229,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/reactor"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/reactor"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/reactor py2"
@@ -257,7 +243,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/renderers"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/renderers"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/renderers py2"
@@ -271,7 +257,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/returners"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/returners"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/returners py2"
@@ -285,7 +271,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/runners"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/runners"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/runners py2"
@@ -299,7 +285,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/scheduler"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/scheduler"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/scheduler py2"
@@ -313,7 +299,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/sdb"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/sdb"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/sdb py2"
@@ -327,7 +313,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/shell"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/shell"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/shell py2"
@@ -341,7 +327,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/spm"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/spm"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/spm py2"
@@ -355,7 +341,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/ssh"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/ssh"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/ssh py2"
@@ -369,7 +355,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/states"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/states"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/states py2"
@@ -383,7 +369,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/utils"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/utils"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/utils py2"
@@ -397,7 +383,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/wheel"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/wheel"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py2",
          "name": "test centos-7 tests/integration/wheel py2"
@@ -411,7 +397,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/unit"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/unit"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/unit py3"
@@ -425,7 +411,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/cli"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/cli"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/cli py3"
@@ -439,7 +425,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/client"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/client"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/client py3"
@@ -453,7 +439,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/cloud"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/cloud"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/cloud py3"
@@ -467,7 +453,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/daemons"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/daemons"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/daemons py3"
@@ -481,7 +467,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/doc"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/doc"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/doc py3"
@@ -495,24 +481,10 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/externalapi"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/externalapi"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/externalapi py3"
-      }
-   ]
-}
----
-{
-   "kind": "pipeline",
-   "name": "centos-7 tests/integration/fileserver py3",
-   "steps": [
-      {
-         "commands": [
-            "tox -e py3-pytest -- tests/integration/fileserver"
-         ],
-         "image": "saltstack/au-centos-7:ci-develop-py3",
-         "name": "test centos-7 tests/integration/fileserver py3"
       }
    ]
 }
@@ -523,7 +495,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/grains"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/grains"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/grains py3"
@@ -537,7 +509,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/loader"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/loader"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/loader py3"
@@ -551,7 +523,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/logging"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/logging"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/logging py3"
@@ -565,7 +537,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/minion"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/minion"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/minion py3"
@@ -579,7 +551,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/modules"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/modules"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/modules py3"
@@ -593,7 +565,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/netapi"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/netapi"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/netapi py3"
@@ -607,7 +579,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/output"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/output"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/output py3"
@@ -621,7 +593,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/pillar"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/pillar"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/pillar py3"
@@ -635,7 +607,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/proxy"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/proxy"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/proxy py3"
@@ -649,7 +621,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/reactor"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/reactor"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/reactor py3"
@@ -663,7 +635,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/renderers"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/renderers"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/renderers py3"
@@ -677,7 +649,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/returners"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/returners"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/returners py3"
@@ -691,7 +663,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/runners"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/runners"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/runners py3"
@@ -705,7 +677,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/scheduler"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/scheduler"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/scheduler py3"
@@ -719,7 +691,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/sdb"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/sdb"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/sdb py3"
@@ -733,7 +705,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/shell"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/shell"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/shell py3"
@@ -747,7 +719,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/spm"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/spm"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/spm py3"
@@ -761,7 +733,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/ssh"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/ssh"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/ssh py3"
@@ -775,7 +747,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/states"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/states"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/states py3"
@@ -789,7 +761,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/utils"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/utils"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/utils py3"
@@ -803,7 +775,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/wheel"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/wheel"
          ],
          "image": "saltstack/au-centos-7:ci-develop-py3",
          "name": "test centos-7 tests/integration/wheel py3"
@@ -817,7 +789,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/unit"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/unit"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/unit py2"
@@ -831,7 +803,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/cli"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/cli"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/cli py2"
@@ -845,7 +817,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/client"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/client"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/client py2"
@@ -859,7 +831,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/cloud"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/cloud"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/cloud py2"
@@ -873,7 +845,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/daemons"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/daemons"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/daemons py2"
@@ -887,7 +859,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/doc"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/doc"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/doc py2"
@@ -901,24 +873,10 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/externalapi"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/externalapi"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/externalapi py2"
-      }
-   ]
-}
----
-{
-   "kind": "pipeline",
-   "name": "ubuntu-16.04 tests/integration/fileserver py2",
-   "steps": [
-      {
-         "commands": [
-            "tox -e py2-pytest -- tests/integration/fileserver"
-         ],
-         "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
-         "name": "test ubuntu-16.04 tests/integration/fileserver py2"
       }
    ]
 }
@@ -929,7 +887,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/grains"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/grains"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/grains py2"
@@ -943,7 +901,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/loader"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/loader"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/loader py2"
@@ -957,7 +915,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/logging"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/logging"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/logging py2"
@@ -971,7 +929,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/minion"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/minion"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/minion py2"
@@ -985,7 +943,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/modules"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/modules"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/modules py2"
@@ -999,7 +957,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/netapi"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/netapi"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/netapi py2"
@@ -1013,7 +971,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/output"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/output"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/output py2"
@@ -1027,7 +985,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/pillar"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/pillar"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/pillar py2"
@@ -1041,7 +999,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/proxy"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/proxy"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/proxy py2"
@@ -1055,7 +1013,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/reactor"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/reactor"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/reactor py2"
@@ -1069,7 +1027,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/renderers"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/renderers"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/renderers py2"
@@ -1083,7 +1041,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/returners"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/returners"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/returners py2"
@@ -1097,7 +1055,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/runners"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/runners"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/runners py2"
@@ -1111,7 +1069,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/scheduler"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/scheduler"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/scheduler py2"
@@ -1125,7 +1083,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/sdb"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/sdb"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/sdb py2"
@@ -1139,7 +1097,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/shell"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/shell"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/shell py2"
@@ -1153,7 +1111,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/spm"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/spm"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/spm py2"
@@ -1167,7 +1125,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/ssh"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/ssh"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/ssh py2"
@@ -1181,7 +1139,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/states"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/states"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/states py2"
@@ -1195,7 +1153,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/utils"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/utils"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/utils py2"
@@ -1209,7 +1167,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py2-pytest -- tests/integration/wheel"
+            "tox -e py2-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/wheel"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
          "name": "test ubuntu-16.04 tests/integration/wheel py2"
@@ -1223,7 +1181,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/unit"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/unit"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/unit py3"
@@ -1237,7 +1195,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/cli"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/cli"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/cli py3"
@@ -1251,7 +1209,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/client"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/client"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/client py3"
@@ -1265,7 +1223,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/cloud"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/cloud"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/cloud py3"
@@ -1279,7 +1237,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/daemons"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/daemons"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/daemons py3"
@@ -1293,7 +1251,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/doc"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/doc"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/doc py3"
@@ -1307,24 +1265,10 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/externalapi"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/externalapi"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/externalapi py3"
-      }
-   ]
-}
----
-{
-   "kind": "pipeline",
-   "name": "ubuntu-16.04 tests/integration/fileserver py3",
-   "steps": [
-      {
-         "commands": [
-            "tox -e py3-pytest -- tests/integration/fileserver"
-         ],
-         "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
-         "name": "test ubuntu-16.04 tests/integration/fileserver py3"
       }
    ]
 }
@@ -1335,7 +1279,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/grains"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/grains"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/grains py3"
@@ -1349,7 +1293,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/loader"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/loader"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/loader py3"
@@ -1363,7 +1307,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/logging"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/logging"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/logging py3"
@@ -1377,7 +1321,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/minion"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/minion"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/minion py3"
@@ -1391,7 +1335,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/modules"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/modules"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/modules py3"
@@ -1405,7 +1349,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/netapi"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/netapi"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/netapi py3"
@@ -1419,7 +1363,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/output"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/output"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/output py3"
@@ -1433,7 +1377,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/pillar"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/pillar"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/pillar py3"
@@ -1447,7 +1391,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/proxy"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/proxy"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/proxy py3"
@@ -1461,7 +1405,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/reactor"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/reactor"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/reactor py3"
@@ -1475,7 +1419,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/renderers"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/renderers"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/renderers py3"
@@ -1489,7 +1433,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/returners"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/returners"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/returners py3"
@@ -1503,7 +1447,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/runners"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/runners"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/runners py3"
@@ -1517,7 +1461,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/scheduler"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/scheduler"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/scheduler py3"
@@ -1531,7 +1475,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/sdb"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/sdb"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/sdb py3"
@@ -1545,7 +1489,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/shell"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/shell"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/shell py3"
@@ -1559,7 +1503,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/spm"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/spm"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/spm py3"
@@ -1573,7 +1517,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/ssh"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/ssh"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/ssh py3"
@@ -1587,7 +1531,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/states"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/states"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/states py3"
@@ -1601,7 +1545,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/utils"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/utils"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/utils py3"
@@ -1615,7 +1559,7 @@
    "steps": [
       {
          "commands": [
-            "tox -e py3-pytest -- tests/integration/wheel"
+            "tox -e py3-pytest -- --ssh-tests --run-destructive -vv -ra --sysinfo --sys-stats tests/integration/wheel"
          ],
          "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
          "name": "test ubuntu-16.04 tests/integration/wheel py3"
@@ -1624,6 +1568,6 @@
 }
 ---
 kind: signature
-hmac: f8592ea0ce52d40383d10b40f6cf40de73ef634c1c895005da7e4dd0e019cc31
+hmac: 0f4b0dff846276ad1a75a836e1d2cf47ed061ee40fcdf464782d11d7728c724e
 
 ...
