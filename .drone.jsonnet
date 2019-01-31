@@ -1,13 +1,13 @@
-local Build(target, py_version, target_branch = 'develop') = {
+local Build(target, py_version, target_branch = 'develop', tests_dir='tests/', excludes=[]) = {
 
   kind: 'pipeline',
-  name: target + '-py' + py_version,
+  name: target + ' ' + tests_dir + ' py' + py_version,
   steps: [
     {
-      name: 'test-' + target + '-py' + py_version,
+      name: 'test ' + target + ' ' + tests_dir + ' py' + py_version,
       image: 'saltstack/au-' + target + ':ci-' + target_branch + '-py' + py_version,
       commands: [
-        'sudo tox -e py' + py_version + '-pytest'
+        'tox -e py' + py_version + '-pytest -- ' + tests_dir
       ]
     }
   ]
@@ -27,9 +27,41 @@ local distros = [
 #  { name: 'ubuntu', version: '18.04' },
 ];
 
+local test_dirs = [
+  'tests/unit',
+  'tests/integration/cli',
+  'tests/integration/client',
+  'tests/integration/cloud',
+  'tests/integration/daemons',
+  'tests/integration/doc',
+  'tests/integration/externalapi',
+  'tests/integration/fileserver',
+  'tests/integration/grains',
+  'tests/integration/loader',
+  'tests/integration/logging',
+  'tests/integration/minion',
+  'tests/integration/modules',
+  'tests/integration/netapi',
+  'tests/integration/output',
+  'tests/integration/pillar',
+  'tests/integration/proxy',
+  'tests/integration/reactor',
+  'tests/integration/renderers',
+  'tests/integration/returners',
+  'tests/integration/runners',
+  'tests/integration/scheduler',
+  'tests/integration/sdb',
+  'tests/integration/shell',
+  'tests/integration/spm',
+  'tests/integration/ssh',
+  'tests/integration/states',
+  'tests/integration/utils',
+  'tests/integration/wheel'
+];
 
 [
-  Build(distro.name + '-' + distro.version, py_version)
+  Build(distro.name + '-' + distro.version, py_version, tests_dir=tests_dir)
   for distro in distros
   for py_version in ['2', '3']
+  for tests_dir in test_dirs
 ]
