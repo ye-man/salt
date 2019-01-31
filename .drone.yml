@@ -1,0 +1,61 @@
+---
+{
+   "kind": "pipeline",
+   "name": "centos-7-py2",
+   "steps": [
+      {
+         "commands": [
+            "sudo tox -e py2-pytest"
+         ],
+         "image": "saltstack/au-centos-7:ci-develop-py2",
+         "name": "test-centos-7-py2"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "centos-7-py3",
+   "steps": [
+      {
+         "commands": [
+            "sudo tox -e py3-pytest"
+         ],
+         "image": "saltstack/au-centos-7:ci-develop-py3",
+         "name": "test-centos-7-py3"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "ubuntu-16.04-py2",
+   "steps": [
+      {
+         "commands": [
+            "sudo tox -e py2-pytest"
+         ],
+         "image": "saltstack/au-ubuntu-16.04:ci-develop-py2",
+         "name": "test-ubuntu-16.04-py2"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "ubuntu-16.04-py3",
+   "steps": [
+      {
+         "commands": [
+            "sudo tox -e py3-pytest"
+         ],
+         "image": "saltstack/au-ubuntu-16.04:ci-develop-py3",
+         "name": "test-ubuntu-16.04-py3"
+      }
+   ]
+}
+---
+kind: signature
+hmac: 91d9243070219f4e49dd79d04fa659ffc72a3e7336bdebda8cd29bbc9b9c08a3
+
+...
