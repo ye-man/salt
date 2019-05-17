@@ -674,12 +674,18 @@ class Resolver(object):
             channel = salt.transport.client.ReqChannel.factory(self.opts,
                                                                 crypt='clear',
                                                                 master_uri=master_uri)
-            return channel.send(load)
+            try:
+                return channel.send(load)
+            finally:
+                channel.stop()
 
         elif self.opts['transport'] == 'raet':
             channel = salt.transport.client.ReqChannel.factory(self.opts)
             channel.dst = (None, None, 'local_cmd')
-            return channel.send(load)
+            try:
+                return channel.send(load)
+            finally:
+                channel.stop()
 
     def cli(self, eauth):
         '''

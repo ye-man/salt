@@ -12,6 +12,7 @@ from tests.support.unit import TestCase, skipIf
 
 # Import Salt libs
 import salt.auth
+import salt.utils.asynchronous
 import salt.utils.event
 import salt.utils.json
 import salt.utils.yaml
@@ -801,6 +802,10 @@ class TestSaltnadoUtils(AsyncTestCase):
 
 @skipIf(not HAS_TORNADO, 'The tornado package needs to be installed')
 class TestEventListener(AsyncTestCase):
+
+    def get_new_ioloop(self):
+        return salt.utils.asynchronous.IOLoop()
+
     def setUp(self):
         if not os.path.exists(SOCK_DIR):
             os.makedirs(SOCK_DIR)

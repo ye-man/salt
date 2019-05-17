@@ -63,6 +63,7 @@ import salt.payload
 import salt.transport.client
 import salt.transport.frame
 import salt.utils.crypt
+import salt.utils.asynchronous
 import salt.utils.decorators
 import salt.utils.event
 import salt.utils.files
@@ -453,7 +454,7 @@ class AsyncAuth(object):
         Only create one instance of AsyncAuth per __key()
         '''
         # do we have any mapping for this io_loop
-        io_loop = io_loop or tornado.ioloop.IOLoop.current()
+        io_loop = io_loop or salt.utils.asynchronous.IOLoop()
         if io_loop not in AsyncAuth.instance_map:
             AsyncAuth.instance_map[io_loop] = weakref.WeakValueDictionary()
         loop_instance_map = AsyncAuth.instance_map[io_loop]
@@ -507,7 +508,7 @@ class AsyncAuth(object):
         if not os.path.isfile(self.pub_path):
             self.get_keys()
 
-        self.io_loop = io_loop or tornado.ioloop.IOLoop.current()
+        self.io_loop = io_loop or salt.utils.asynchronous.IOLoop()
 
         salt.utils.crypt.reinit_crypto()
         key = self.__key(self.opts)
@@ -1236,6 +1237,7 @@ class SAuth(AsyncAuth):
                     log.debug('Authentication wait time is %s', acceptance_wait_time)
                 continue
             break
+        channel.stop()
         self._creds = creds
         self._crypticle = Crypticle(self.opts, creds['aes'])
 
@@ -1272,7 +1274,10 @@ class SAuth(AsyncAuth):
         auth['master_uri'] = self.opts['master_uri']
 
         if not channel:
+            close_channel = True
             channel = salt.transport.client.ReqChannel.factory(self.opts, crypt='clear')
+        else:
+            cloose_channel = False
 
         sign_in_payload = self.minion_sign_in_payload()
         try:
@@ -1285,6 +1290,8 @@ class SAuth(AsyncAuth):
             if safe:
                 log.warning('SaltReqTimeoutError: %s', e)
                 return 'retry'
+            if close_channel:
+                channel.stop()
             raise SaltClientError('Attempt to authenticate with the salt master failed with timeout error')
 
         if 'load' in payload:
@@ -1297,6 +1304,8 @@ class SAuth(AsyncAuth):
                             'for this minion on the Salt Master.\nThe Salt '
                             'Minion will attempt to to re-authenicate.'
                         )
+                        if close_channel:
+                            channel.stop()
                         return 'retry'
                     else:
                         log.critical(
@@ -1306,9 +1315,13 @@ class SAuth(AsyncAuth):
                             'minion.\nOr restart the Salt Master in open mode to '
                             'clean out the keys. The Salt Minion will now exit.'
                         )
+                        if close_channel:
+                            channel.stop()
                         sys.exit(salt.defaults.exitcodes.EX_NOPERM)
                 # has the master returned that its maxed out with minions?
                 elif payload['load']['ret'] == 'full':
+                    if close_channel:
+                        channel.stop()
                     return 'full'
                 else:
                     log.error(
@@ -1320,6 +1333,8 @@ class SAuth(AsyncAuth):
                         'to re-authenticate.',
                         self.opts['id'], self.opts['acceptance_wait_time']
                     )
+                    if close_channel:
+                        channel.stop()
                     return 'retry'
         auth['aes'] = self.verify_master(payload, master_pub='token' in sign_in_payload)
         if not auth['aes']:
@@ -1332,6 +1347,8 @@ class SAuth(AsyncAuth):
                 'Salt Minion.\nThe master public key can be found '
                 'at:\n%s', salt.version.__version__, m_pub_fn
             )
+            if close_channel:
+                channel.stop()
             sys.exit(42)
         if self.opts.get('syndic_master', False):  # Is syndic
             syndic_finger = self.opts.get('syndic_finger', self.opts.get('master_finger', False))
@@ -1343,6 +1360,8 @@ class SAuth(AsyncAuth):
                 if salt.utils.crypt.pem_finger(m_pub_fn, sum_type=self.opts['hash_type']) != self.opts['master_finger']:
                     self._finger_fail(self.opts['master_finger'], m_pub_fn)
         auth['publish_port'] = payload['publish_port']
+        if close_channel:
+            channel.stop()
         return auth
 
 

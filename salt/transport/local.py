@@ -47,3 +47,9 @@ class LocalChannel(ReqChannel):
                                                                     dictkey=dictkey,
                                                                     tries=tries,
                                                                     timeout=timeout)
+
+    def close(self):
+        '''
+        No-op close method, exists for api compatability with other req channels
+        '''
+        pass

@@ -36,5 +36,5 @@ setproctitle
 strict_rfc3339
 supervisor==3.3.5; python_version < '3'
 timelib
-tornado<5.0
+tornado==5.1
 virtualenv

@@ -63,15 +63,15 @@ class EventSender(Process):
         self.wait = wait
 
     def run(self):
-        me = salt.utils.event.MasterEvent(SOCK_DIR, listen=False)
-        time.sleep(self.wait)
-        me.fire_event(self.data, self.tag)
-        # Wait a few seconds before tearing down the zmq context
-        if os.environ.get('TRAVIS_PYTHON_VERSION', None) is not None:
-            # Travis is slow
-            time.sleep(10)
-        else:
-            time.sleep(2)
+        with salt.utils.event.MasterEvent(SOCK_DIR, listen=False) as me:
+            time.sleep(self.wait)
+            me.fire_event(self.data, self.tag)
+            # Wait a few seconds before tearing down the zmq context
+            if os.environ.get('TRAVIS_PYTHON_VERSION', None) is not None:
+                # Travis is slow
+                time.sleep(10)
+            else:
+                time.sleep(2)
 
 
 @contextmanager
@@ -317,13 +317,13 @@ class TestSaltEvent(TestCase):
     def test_event_many_backlog(self):
         '''Test a large number of events, send all then recv all'''
         with eventpublisher_process():
-            me = salt.utils.event.MasterEvent(SOCK_DIR, listen=True)
-            # Must not exceed zmq HWM
-            for i in range(500):
-                me.fire_event({'data': '{0}'.format(i)}, 'testevents')
-            for i in range(500):
-                evt = me.get_event(tag='testevents')
-                self.assertGotEvent(evt, {'data': '{0}'.format(i)}, 'Event {0}'.format(i))
+            with salt.utils.event.MasterEvent(SOCK_DIR, listen=True) as me:
+                # Must not exceed zmq HWM
+                for i in range(500):
+                    me.fire_event({'data': '{0}'.format(i)}, 'testevents')
+                for i in range(500):
+                    evt = me.get_event(tag='testevents')
+                    self.assertGotEvent(evt, {'data': '{0}'.format(i)}, 'Event {0}'.format(i))
 
     # Test the fire_master function. As it wraps the underlying fire_event,
     # we don't need to perform extensive testing.
@@ -339,8 +339,6 @@ class TestSaltEvent(TestCase):
 
 
 class TestAsyncEventPublisher(AsyncTestCase):
-    def get_new_ioloop(self):
-        return zmq.eventloop.ioloop.ZMQIOLoop()
 
     def setUp(self):
         super(TestAsyncEventPublisher, self).setUp()

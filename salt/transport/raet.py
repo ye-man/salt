@@ -160,3 +160,7 @@ class RAETReqChannel(ReqChannel):
                 tried += 1
             time.sleep(0.01)
         return jobber_rxMsgs.pop(track).get('return', {})
+
+    def close(self):
+        # TODO: graceful shutdown
+        pass

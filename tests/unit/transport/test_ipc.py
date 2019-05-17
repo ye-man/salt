@@ -21,6 +21,7 @@ import salt.transport.ipc
 import salt.transport.server
 import salt.transport.client
 import salt.utils.platform
+import salt.utils.asynchronous
 
 from salt.ext import six
 from salt.ext.six.moves import range
@@ -45,7 +46,7 @@ class BaseIPCReqCase(tornado.testing.AsyncTestCase):
 
         self.server_channel = salt.transport.ipc.IPCMessageServer(
             self.socket_path,
-            io_loop=self.io_loop,
+            io_loop=salt.utils.asynchronous.IOLoop(),
             payload_handler=self._handle_payload,
         )
         self.server_channel.start()
@@ -89,7 +90,7 @@ class IPCMessageClient(BaseIPCReqCase):
         if not hasattr(self, 'channel') or self.channel is None:
             self.channel = salt.transport.ipc.IPCMessageClient(
                 socket_path=self.socket_path,
-                io_loop=self.io_loop,
+                io_loop=salt.utils.asynchronous.IOLoop(),
             )
             self.channel.connect(callback=self.stop)
             self.wait()
@@ -183,7 +184,7 @@ class IPCMessagePubSubCase(tornado.testing.AsyncTestCase):
     def _get_sub_channel(self):
         sub_channel = salt.transport.ipc.IPCMessageSubscriber(
             socket_path=self.socket_path,
-            io_loop=self.io_loop,
+            io_loop=salt.utils.asynchronous.IOLoop(self.io_loop),
         )
         sub_channel.connect(callback=self.stop)
         self.wait()

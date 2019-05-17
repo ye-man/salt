@@ -658,6 +658,9 @@ class GitPillarHTTPTestBase(GitPillarTestBase, WebserverMixin):
                     pass
         shutil.rmtree(cls.root_dir, ignore_errors=True)
 
+    def tearDown(self):
+        super(GitPillarTestBase, self).tearDown()
+
     def setUp(self):
         '''
         Create and start the webserver, and create the git repo
