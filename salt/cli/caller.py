@@ -316,4 +316,4 @@ class ZeroMQCaller(BaseCaller):
         try:
             channel.send(load)
         finally:
-            channel.close()
+            chanel.stop()

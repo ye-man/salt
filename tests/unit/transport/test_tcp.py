@@ -6,6 +6,7 @@
 # Import python libs
 from __future__ import absolute_import, print_function, unicode_literals
 import threading
+import logging
 
 import tornado.gen
 import tornado.ioloop
@@ -16,9 +17,11 @@ import salt.config
 from salt.ext import six
 import salt.utils.platform
 import salt.utils.process
+import salt.utils.versions
 import salt.transport.server
 import salt.transport.client
 import salt.exceptions
+import salt.utils.asynchronous
 from salt.ext.six.moves import range
 from salt.transport.tcp import SaltMessageClientPool
 
@@ -28,6 +31,8 @@ from tests.support.helpers import get_unused_localhost_port, flaky
 from tests.support.mixins import AdaptedConfigurationTestCaseMixin
 from tests.support.mock import MagicMock, patch
 from tests.unit.transport.mixins import PubChannelMixin, ReqChannelMixin
+
+log = logging.getLogger(__name__)
 
 
 class BaseTCPReqCase(TestCase, AdaptedConfigurationTestCaseMixin):
@@ -69,13 +74,16 @@ class BaseTCPReqCase(TestCase, AdaptedConfigurationTestCaseMixin):
         cls.server_channel = salt.transport.server.ReqServerChannel.factory(cls.master_config)
         cls.server_channel.pre_fork(cls.process_manager)
 
-        cls.io_loop = tornado.ioloop.IOLoop()
+        cls.io_loop = salt.utils.asynchronous.IOLoop()
 
         def run_loop_in_thread(loop):
             loop.make_current()
             loop.start()
 
-        cls.server_channel.post_fork(cls._handle_payload, io_loop=cls.io_loop)
+        try:
+            cls.server_channel.post_fork(cls._handle_payload, io_loop=cls.io_loop)
+        except ValueError:
+            log.error("Adding handle twice, this needs to be fixed for asyncio")
 
         cls.server_thread = threading.Thread(target=run_loop_in_thread, args=(cls.io_loop,))
         cls.server_thread.daemon = True
@@ -110,7 +118,8 @@ class ClearReqTestCases(BaseTCPReqCase, ReqChannelMixin):
         self.channel = salt.transport.client.ReqChannel.factory(self.minion_config, crypt='clear')
 
     def tearDown(self):
-        del self.channel
+        self.channel.stop()
+        del self.channel.obj
 
     @classmethod
     @tornado.gen.coroutine
@@ -127,7 +136,8 @@ class AESReqTestCases(BaseTCPReqCase, ReqChannelMixin):
         self.channel = salt.transport.client.ReqChannel.factory(self.minion_config)
 
     def tearDown(self):
-        del self.channel
+        self.channel.stop()
+        del self.channel.obj
 
     @classmethod
     @tornado.gen.coroutine
@@ -192,7 +202,8 @@ class BaseTCPPubCase(AsyncTestCase, AdaptedConfigurationTestCaseMixin):
         cls.req_server_channel = salt.transport.server.ReqServerChannel.factory(cls.master_config)
         cls.req_server_channel.pre_fork(cls.process_manager)
 
-        cls._server_io_loop = tornado.ioloop.IOLoop()
+        cls._server_io_loop = salt.utils.asynchronous.IOLoop()
+
         cls.req_server_channel.post_fork(cls._handle_payload, io_loop=cls._server_io_loop)
 
         def run_loop_in_thread(loop):
@@ -230,7 +241,8 @@ class BaseTCPPubCase(AsyncTestCase, AdaptedConfigurationTestCaseMixin):
                 failures.append((k, v))
         if failures:
             raise Exception('FDs still attached to the IOLoop: {0}'.format(failures))
-        del self.channel
+        self.channel.stop()
+        del self.channel.obj
         del self._start_handlers
 
 

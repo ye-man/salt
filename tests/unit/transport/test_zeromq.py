@@ -32,6 +32,7 @@ import salt.log.setup
 from salt.ext import six
 import salt.utils.process
 import salt.utils.platform
+import salt.utils.versions
 import salt.transport.server
 import salt.transport.client
 import salt.exceptions
@@ -45,6 +46,7 @@ from tests.support.helpers import flaky, get_unused_localhost_port
 from tests.support.mixins import AdaptedConfigurationTestCaseMixin
 from tests.support.mock import MagicMock, patch
 from tests.unit.transport.mixins import PubChannelMixin, ReqChannelMixin
+
 
 ON_SUSE = False
 if 'SuSE' in linux_distribution(full_distribution_name=False):
@@ -160,6 +162,7 @@ class ClearReqTestCases(BaseZMQReqCase, ReqChannelMixin):
 @flaky
 @skipIf(ON_SUSE, 'Skipping until https://github.com/saltstack/salt/issues/32902 gets fixed')
 class AESReqTestCases(BaseZMQReqCase, ReqChannelMixin):
+
     def setUp(self):
         self.channel = salt.transport.client.ReqChannel.factory(self.minion_config)
 

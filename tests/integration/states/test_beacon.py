@@ -7,9 +7,11 @@ Integration tests for the beacon states
 from __future__ import absolute_import, print_function, unicode_literals
 
 # Import Salt Testing Libs
+import salt.utils.versions
 from tests.support.case import ModuleCase
 from tests.support.helpers import destructiveTest
 from tests.support.mixins import SaltReturnAssertsMixin
+from tests.support.unit import skipIf
 
 import logging
 log = logging.getLogger(__name__)

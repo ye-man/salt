@@ -33,5 +33,5 @@ salttesting==2017.6.1
 setproctitle
 strict_rfc3339
 timelib
-tornado<5.0
+tornado==5.1
 virtualenv

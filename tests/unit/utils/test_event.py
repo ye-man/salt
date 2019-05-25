@@ -272,13 +272,13 @@ class TestSaltEvent(TestCase):
     def test_event_many_backlog(self):
         '''Test a large number of events, send all then recv all'''
         with eventpublisher_process(self.sock_dir):
-            me = salt.utils.event.MasterEvent(self.sock_dir, listen=True)
-            # Must not exceed zmq HWM
-            for i in range(500):
-                me.fire_event({'data': '{0}'.format(i)}, 'testevents')
-            for i in range(500):
-                evt = me.get_event(tag='testevents')
-                self.assertGotEvent(evt, {'data': '{0}'.format(i)}, 'Event {0}'.format(i))
+            with salt.utils.event.MasterEvent(self.sock_dir, listen=True) as me:
+                # Must not exceed zmq HWM
+                for i in range(500):
+                    me.fire_event({'data': '{0}'.format(i)}, 'testevents')
+                for i in range(500):
+                    evt = me.get_event(tag='testevents')
+                    self.assertGotEvent(evt, {'data': '{0}'.format(i)}, 'Event {0}'.format(i))
 
     # Test the fire_master function. As it wraps the underlying fire_event,
     # we don't need to perform extensive testing.
@@ -294,8 +294,6 @@ class TestSaltEvent(TestCase):
 
 
 class TestAsyncEventPublisher(AsyncTestCase):
-    def get_new_ioloop(self):
-        return zmq.eventloop.ioloop.ZMQIOLoop()
 
     def setUp(self):
         super(TestAsyncEventPublisher, self).setUp()

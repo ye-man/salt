@@ -90,6 +90,7 @@ import salt.defaults.exitcodes
 import salt.transport.ipc
 import salt.transport.client
 
+from multiprocessing.pool import ThreadPool
 log = logging.getLogger(__name__)
 
 # The SUB_EVENT set is for functions that require events fired based on
@@ -253,7 +254,7 @@ class SaltEvent(object):
             self.io_loop = io_loop
             self._run_io_loop_sync = False
         else:
-            self.io_loop = tornado.ioloop.IOLoop()
+            self.io_loop = salt.utils.asynchronous.IOLoop()
             self._run_io_loop_sync = True
         self.cpub = False
         self.cpush = False
@@ -379,16 +380,22 @@ class SaltEvent(object):
         if self._run_io_loop_sync:
             with salt.utils.asynchronous.current_ioloop(self.io_loop):
                 if self.subscriber is None:
-                    self.subscriber = salt.transport.ipc.IPCMessageSubscriber(
-                    self.puburi,
-                    io_loop=self.io_loop
-                )
+                    self.subscriber = salt.utils.asynchronous.SyncWrapper(
+                        salt.transport.ipc.IPCMessageSubscriber,
+                        args=(self.puburi,),
+                        async_methods=['connect',],
+                        stop_methods=['close',],
+                        loop_kwarg='io_loop',
+                    )
                 try:
-                    self.io_loop.run_sync(
-                        lambda: self.subscriber.connect(timeout=timeout))
+                    self.subscriber.connect(timeout=timeout)
                     self.cpub = True
+                except tornado.iostream.StreamClosedError:
+                    log.trace("Subscriber connect saw stream closed.")
                 except Exception:
-                    pass
+                    log.exception(
+                        "Unhandled exception while connecting subscriber"
+                    )
         else:
             if self.subscriber is None:
                 self.subscriber = salt.transport.ipc.IPCMessageSubscriber(
@@ -408,7 +415,10 @@ class SaltEvent(object):
         if not self.cpub:
             return
 
-        self.subscriber.close()
+        if self._run_io_loop_sync:
+            self.subscriber.stop()
+        else:
+            self.subscriber.close()
         self.subscriber = None
         self.pending_events = []
         self.cpub = False
@@ -424,16 +434,22 @@ class SaltEvent(object):
         if self._run_io_loop_sync:
             with salt.utils.asynchronous.current_ioloop(self.io_loop):
                 if self.pusher is None:
-                    self.pusher = salt.transport.ipc.IPCMessageClient(
-                        self.pulluri,
-                        io_loop=self.io_loop
+                    self.pusher = salt.utils.asynchronous.SyncWrapper(
+                        salt.transport.ipc.IPCMessageClient,
+                        args=(self.pulluri,),
+                        async_methods=['connect'],
+                        stop_methods=['close',],
+                        loop_kwarg='io_loop',
                     )
                 try:
-                    self.io_loop.run_sync(
-                        lambda: self.pusher.connect(timeout=timeout))
+                    self.pusher.connect(timeout=timeout)
                     self.cpush = True
+                except tornado.iostream.StreamClosedError:
+                    log.trace("Pusher connect saw stream closed.")
                 except Exception:
-                    pass
+                    log.exception(
+                        "Unhandled exception while connecting pusher"
+                    )
         else:
             if self.pusher is None:
                 self.pusher = salt.transport.ipc.IPCMessageClient(
@@ -546,6 +562,8 @@ class SaltEvent(object):
             # If no_block is False and wait is 0, that
             # means an infinite timeout.
             wait = None
+
+        #log.debug("_get_event IPCSubscriber read")
         while (run_once is False and not wait) or time.time() <= timeout_at:
             if no_block is True:
                 if run_once is True:
@@ -558,7 +576,7 @@ class SaltEvent(object):
                 if not self.cpub and not self.connect_pub(timeout=wait):
                     break
 
-                raw = self.subscriber.read_sync(timeout=wait)
+                raw = self.subscriber.read(timeout=wait)
                 if raw is None:
                     break
                 mtag, data = self.unpack(raw, self.serial)
@@ -649,6 +667,10 @@ class SaltEvent(object):
                 if auto_reconnect:
                     raise_errors = self.raise_errors
                     self.raise_errors = True
+                    log.debug(
+                        "get_event IPCSubscriber read (autoreconnect) %s %s",
+                        wait, no_block
+                    )
                     while True:
                         try:
                             ret = self._get_event(wait, tag, match_func, no_block)
@@ -659,6 +681,10 @@ class SaltEvent(object):
                             continue
                     self.raise_errors = raise_errors
                 else:
+                    log.debug(
+                        "get_event IPCSubscriber read (no autoreconnect) %s %s",
+                        wait, no_block
+                    )
                     ret = self._get_event(wait, tag, match_func, no_block)
 
         if ret is None or full:
@@ -675,7 +701,8 @@ class SaltEvent(object):
         if not self.cpub:
             if not self.connect_pub():
                 return None
-        raw = self.subscriber.read_sync(timeout=0)
+        log.debug("get_event_noblock IPCSubscriber read")
+        raw = self.subscriber._read(timeout=0)
         if raw is None:
             return None
         mtag, data = self.unpack(raw, self.serial)
@@ -691,7 +718,8 @@ class SaltEvent(object):
         if not self.cpub:
             if not self.connect_pub():
                 return None
-        raw = self.subscriber.read_sync(timeout=None)
+        log.debug("get_event_block IPCSubscriber read")
+        raw = self.subscriber._read(timeout=None)
         if raw is None:
             return None
         mtag, data = self.unpack(raw, self.serial)
@@ -758,8 +786,9 @@ class SaltEvent(object):
         if self._run_io_loop_sync:
             with salt.utils.asynchronous.current_ioloop(self.io_loop):
                 try:
-                    self.io_loop.run_sync(lambda: self.pusher.send(msg))
+                    self.pusher.send(msg)
                 except Exception as ex:
+                    log.exception("push SEND")
                     log.debug(ex)
                     raise
         else:
@@ -783,11 +812,19 @@ class SaltEvent(object):
 
     def destroy(self):
         if self.subscriber is not None:
-            self.subscriber.close()
+            if self._run_io_loop_sync:
+                self.subscriber.stop()
+            else:
+                self.subscriber.close()
+            self.subscriber = None
         if self.pusher is not None:
-            self.pusher.close()
+            if self._run_io_loop_sync:
+                self.pusher.stop()
+            else:
+                self.pusher.close()
+            self.pusher = None
         if self._run_io_loop_sync and not self.keep_loop:
-            self.io_loop.close()
+           self.io_loop.close()
 
     def _fire_ret_load_specific_fun(self, load, fun_index=0):
         '''
@@ -890,13 +927,14 @@ class SaltEvent(object):
         # This will handle reconnects
         return self.subscriber.read_async()
 
-    def __del__(self):
-        # skip exceptions in destroy-- since destroy() doesn't cover interpreter
-        # shutdown-- where globals start going missing
-        try:
-            self.destroy()
-        except Exception:
-            pass
+    # TODO: This should no longer be needed.
+    #def __del__(self):
+    #    # skip exceptions in destroy-- since destroy() doesn't cover interpreter
+    #    # shutdown-- where globals start going missing
+    #    try:
+    #        self.destroy()
+    #    except Exception:
+    #        pass
 
     def __enter__(self):
         return self
@@ -986,7 +1024,7 @@ class AsyncEventPublisher(object):
         default_minion_sock_dir = self.opts['sock_dir']
         self.opts.update(opts)
 
-        self.io_loop = io_loop or tornado.ioloop.IOLoop.current()
+        self.io_loop = salt.utils.asynchronous.IOLoop()
         self._closing = False
 
         hash_type = getattr(hashlib, self.opts['hash_type'])
@@ -1116,7 +1154,7 @@ class EventPublisher(salt.utils.process.SignalHandlingMultiprocessingProcess):
         Bind the pub and pull sockets for events
         '''
         salt.utils.process.appendproctitle(self.__class__.__name__)
-        self.io_loop = tornado.ioloop.IOLoop()
+        self.io_loop = salt.utils.asynchronous.IOLoop()
         with salt.utils.asynchronous.current_ioloop(self.io_loop):
             if self.opts['ipc_mode'] == 'tcp':
                 epub_uri = int(self.opts['tcp_master_pub_port'])
@@ -1366,7 +1404,7 @@ class StateFire(object):
         except Exception:
             pass
         finally:
-            channel.close()
+            channel.stop()
         return True
 
     def fire_running(self, running):
@@ -1398,5 +1436,5 @@ class StateFire(object):
         except Exception:
             pass
         finally:
-            channel.close()
+            channel.stop()
         return True
