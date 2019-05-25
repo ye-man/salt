@@ -253,8 +253,8 @@ class SyncWrapper(object):
             result = io_loop.run_sync(
                 lambda: getattr(self.obj, key)(*args, **kwargs)
             )
+            results.append(True)
+            results.append(result)
         except Exception as exc:
             results.append(False)
             results.append(sys.exc_info())
-        results.append(True)
-        results.append(result)
